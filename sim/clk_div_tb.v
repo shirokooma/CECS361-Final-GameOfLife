@@ -22,13 +22,17 @@
 
 module clk_div_tb();
     reg clk;
+    reg reset;
     wire clk4;
     
-    clk_div uut(.clk(clk), .q(clk4));
+    clk_div uut(.clk(clk),.reset(reset), .q(clk4));
+    
+    always #10 clk = ~clk;
     
     initial begin
         clk = 0;
-        forever #10 clk = ~clk;
-        
+        reset = 1;
+        #10
+        reset = 0;       
     end
 endmodule
