@@ -31,7 +31,7 @@ module clk_div(
     reg q0;
     reg q1;
     
-    always @(posedge clk or negedge reset) begin
+    always @(posedge clk or posedge reset) begin
         if (reset)
             q0 <= 1'b0;
         else 
@@ -39,7 +39,7 @@ module clk_div(
     end
     assign d0 = ~q0;
     
-    always @(posedge q0 or negedge reset) begin
+    always @(posedge q0 or posedge reset) begin
         if (reset)
             q1 <= 1'b0;
         else
