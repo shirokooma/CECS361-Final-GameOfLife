@@ -49,5 +49,4 @@ module clk_div(
     assign d1 =  ~q1;
     assign q = q1;
             
-    
 endmodule

@@ -31,7 +31,7 @@ module game_of_life(KEY, CLOCK_50, x, y, r, g, b);
     // x and y are pixel coordinates on the 640-by-480 VGA display
     input [9:0] x, y;
     // r, g, and b represent the colour of each pixel on the VGA display
-    output [9:0] r, g, b;
+    output [3:0] r, g, b;
 
     /**
      * cells determines whether a square is on or off.
@@ -368,7 +368,7 @@ module game_of_life(KEY, CLOCK_50, x, y, r, g, b);
 
     // Create a clock to control the speed of generations
     wire Clk;
-    clk_div(Clk, CLOCK_50);
+    clk_div(.Clk(clk), .reset(), .q(CLOCK_50));
 
     /**
      * Assign neighbours for each cell depending on the cell's location.

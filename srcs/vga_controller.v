@@ -26,10 +26,10 @@ module vga_controller(
     output reg hsync,
     output reg vsync,
     output reg inside_video,
-    output [9:0] x_pos,
-    output [8:0] y_pos 
+    output [9:0] x_pos,// change this to output rgb
+    output [9:0] y_pos  // this outputs hsync and vsync, should sync grid and game together
     
-    );
+    ); 
     // sync, backporch, video, front porch
     parameter HACTIVE = 10'd640;
     parameter HFP = 10'd16;
@@ -54,7 +54,7 @@ module vga_controller(
     always @(posedge pixel_clk or posedge reset) begin
         if (reset) begin
             h_counter <= 0;
-        end else if (h_counter == HMAX -1) begin
+        end else if (h_counter == HMAX - 1) begin
             h_counter <= 0;
             v_enable <= 1;
         end else begin
