@@ -9,8 +9,9 @@
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
-// Description: Game of life algorithm with presets. Revision needed
-// 
+// Description: Open sourced from Spencer Elliot. Revisioned for FPGA implementation for 
+//              CSULB's CECS 361 Final Project by Evan Nguyen.
+//              Game of life algorithm with presets. 
 // Dependencies: 
 // 
 // Revision:
@@ -23,11 +24,11 @@
 /**
  * Main module to be instantiated in a project that uses a VGA controller
  */
-module game_of_life(KEY, CLOCK_50, x, y, r, g, b);
+module game_of_life(KEY, CLOCK_25, x, y, r, g, b);
     // KEYs are used to reset and cycle through presets
     input [3:0] KEY;
-    // CLOCK_50 is used as a seed for the slower clock which controls the speed of Life generations
-    input CLOCK_50;
+    // CLOCK_25 is used as a seed for the slower clock which controls the speed of Life generations
+    input CLOCK_25;
     // x and y are pixel coordinates on the 640-by-480 VGA display
     input [9:0] x, y;
     // r, g, and b represent the colour of each pixel on the VGA display
@@ -367,8 +368,8 @@ module game_of_life(KEY, CLOCK_50, x, y, r, g, b);
     assign cells_reset_state = cells_preset;
 
     // Create a clock to control the speed of generations
-    wire Clk;
-    clk_div(.Clk(clk), .reset(), .q(CLOCK_50));
+    //wire Clk;
+    //clk_div(.clk(Clk), .reset(), .q(CLOCK_25));
 
     /**
      * Assign neighbours for each cell depending on the cell's location.
@@ -471,7 +472,7 @@ module game_of_life(KEY, CLOCK_50, x, y, r, g, b);
                 assign neighbours[7] = cells[i + 64 + 1];
             end
             // Create the module for the cell
-            live_cell(neighbours, Clk, KEY[2], cells_reset_state[i], cells[i]);
+            live_cell(neighbours, CLOCK_25, KEY[2], cells_reset_state[i], cells[i]);
         end
     endgenerate
         
