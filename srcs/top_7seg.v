@@ -3,7 +3,7 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 11/12/2021 05:45:51 PM
+// Create Date: 12/02/2021 04:27:29 PM
 // Design Name: 
 // Module Name: top_7seg
 // Project Name: 
@@ -21,19 +21,18 @@
 
 
 module top_7seg(
-input wire clk,
-output wire [3:0] anode,
-output wire [7:0] cathode
+    input in1,
+    input in0,
+    output[7:0] cathode,
+    output [7:0] anode
     );
     
-    wire refreshclock;
-    wire [2:0] refreshcounter;
-    wire [3:0] ONE_DIGIT;
-    clock_divider refresh_clock_generator(.clk(clk),.divided_clk(refresh_clock));
+    assign anode = 8'b1111_1110;
+    wire [3:0] Q;
     
-    refreshcounter refresh_counter_wrapper(.refresh_clock(refresh_clock),.refreshcounter(refreshcounter));
+    BCD_to_7seg
+        BCD(.Q(Q),.cathode(cathode));
     
-    anode_control anode_control_wrapper(.refreshcounter(refreshcounter),.anode(anode));
-    
-    character_control character_control_wrapper(.char1(),.char2(),.char3(),.char4(),.char5(),.char6(),.char7(),.ONE_DIGIT(ONE_DIGIT));
+    pattern_sel
+        sel(.in1(in1),.in0(in0),.Q(Q));
 endmodule
