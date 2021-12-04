@@ -9,7 +9,8 @@
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
-// Description: Generic VGA controller for 640x480 @ 60hz. 
+// Description: Generic VGA controller for 640x480 @ 60hz. Revisioned by Evan Nguyen for 
+//              CSULB's CECS 361 Final Project
 //              TO DO: condense, add more comments by 3rd progress report.
 // Dependencies: 
 // 
@@ -25,7 +26,7 @@ module vga_controller(
     input reset,
     output reg hsync,
     output reg vsync,
-    output reg inside_video,
+    output reg inside_video, // this might be redundent
     output [9:0] x_pos,// change this to output rgb
     output [9:0] y_pos  // this outputs hsync and vsync, should sync grid and game together
     

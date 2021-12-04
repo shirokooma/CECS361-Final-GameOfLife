@@ -9,7 +9,7 @@
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
-// Description: 
+// Description: Divides 100 MHz clock to 25MHz for 640x480 sample @ 60Hz
 // 
 // Dependencies: 
 // 
@@ -19,34 +19,37 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-
-module clk_div(
-    input clk,
-    input reset,
-    output q
-    );
+module clk_div ( 
+                input clk,
+                input reset,
+                output q
+);
     
-    wire d0;
-    wire d1;
-    reg q0;
-    reg q1;
-    
-    always @(posedge clk or posedge reset) begin
-        if (reset)
-            q0 <= 1'b0;
-        else 
-            q0 <= d0;
+     
+    reg [1:0] r_reg;
+    wire [1:0] r_nxt;
+    reg clk_track;
+     
+    always @(posedge clk or posedge reset)
+     
+    begin
+      if (reset)
+         begin
+            r_reg <= 3'b0;
+        clk_track <= 1'b0;
+         end
+     
+      else if (r_nxt == 2'b10)
+           begin
+             r_reg <= 0;
+             clk_track <= ~clk_track;
+           end
+     
+      else 
+          r_reg <= r_nxt;
     end
-    assign d0 = ~q0;
-    
-    always @(posedge q0 or posedge reset) begin
-        if (reset)
-            q1 <= 1'b0;
-        else
-            q1 <= d1;
-    end
-    
-    assign d1 =  ~q1;
-    assign q = q1;
-            
+ 
+ assign r_nxt = r_reg+1;   	      
+ assign clk_out = clk_track;
+ 
 endmodule

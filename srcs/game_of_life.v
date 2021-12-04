@@ -472,11 +472,11 @@ module game_of_life(KEY, CLOCK_25, x, y, r, g, b);
                 assign neighbours[7] = cells[i + 64 + 1];
             end
             // Create the module for the cell
-            live_cell(neighbours, CLOCK_25, KEY[2], cells_reset_state[i], cells[i]);
+            live_cell(.neighbours(neighbours), .Clk(CLOCK_25), .Rst(KEY[2]), .initial_state(cells_reset_state[i]), .state(cells[i]));
         end
     endgenerate
         
     // Show the cells on the VGA display
-    display_grid(cells, x, y, r, g, b);
+    display_grid(.cells(cells), .x(x), .y(y), .r(r), .g(g), .b(b));
 
 endmodule
