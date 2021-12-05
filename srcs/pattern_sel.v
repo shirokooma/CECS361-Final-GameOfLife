@@ -26,12 +26,12 @@
 module pattern_sel(
     input in1, // msb switch 
     input in0,
-    input pattern_a, // Glider
-    input pattern_b, // Blinker
-    input pattern_c, // Beacon
-    input pattern_d, // Acorn
+    input [1:0] pattern_a, // Glider
+    input [1:0] pattern_b, // Blinker
+    input [1:0] pattern_c, // Beacon
+    input [1:0] pattern_d, // Acorn
     output [3:0] Q,
-    output out_pattern
+    output [1:0] out_pattern
     );
     
     assign out_pattern = in1 ? ( in0 ? pattern_d : pattern_c) : (in0 ? pattern_b : pattern_a);
