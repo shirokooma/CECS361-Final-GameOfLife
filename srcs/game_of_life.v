@@ -24,11 +24,11 @@
 /**
  * Main module to be instantiated in a project that uses a VGA controller
  */
-module game_of_life(KEY, CLOCK_25, x, y, r, g, b);
+module game_of_life(KEY, clk, x, y, r, g, b);
     // KEYs are used to reset and cycle through presets
     input [3:0] KEY;
     // CLOCK_25 is used as a seed for the slower clock which controls the speed of Life generations
-    input CLOCK_25;
+    input clk;
     // x and y are pixel coordinates on the 640-by-480 VGA display
     input [9:0] x, y;
     // r, g, and b represent the colour of each pixel on the VGA display
@@ -104,7 +104,7 @@ module game_of_life(KEY, CLOCK_25, x, y, r, g, b);
     end
     
     // When KEY[2] is pressed, cycle through presets
-    always @(posedge KEY[2]) begin
+    /*always @(posedge KEY[2]) begin
         if (preset_state == 1) begin
             cells_preset[0    :64*0+63 ] <= 64'b0000000000000000000000000000000000000000000000000000000000000000;
             cells_preset[64*1 :64*1+63 ] <= 64'b0000000000000000000000000000000000000000000000000000000000000000;
@@ -362,14 +362,14 @@ module game_of_life(KEY, CLOCK_25, x, y, r, g, b);
             preset_state <= 1;
         end 
 
-    end
+    end */
 
     // The value of cells_reset_state is the same as the current value of cells_preset
     assign cells_reset_state = cells_preset;
 
     // Create a clock to control the speed of generations
-    //wire Clk;
-    //clk_div(.clk(Clk), .reset(), .q(CLOCK_25));
+    wire clk1;
+    clk_div(.Clk_100M(clk), .q(clk1));
 
     /**
      * Assign neighbours for each cell depending on the cell's location.
@@ -472,7 +472,7 @@ module game_of_life(KEY, CLOCK_25, x, y, r, g, b);
                 assign neighbours[7] = cells[i + 64 + 1];
             end
             // Create the module for the cell
-            live_cell(.neighbours(neighbours), .Clk(CLOCK_25), .Rst(KEY[2]), .initial_state(cells_reset_state[i]), .state(cells[i]));
+            live_cell(neighbours, clk1, KEY[2], cells_reset_state[i], cells[i]);
         end
     endgenerate
         

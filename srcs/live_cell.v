@@ -19,9 +19,9 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-module live_cell(neighbours, Clk, Rst, initial_state, state);
+module live_cell(neighbours, clk, Rst, initial_state, state);
     input [7:0] neighbours;
-    input Clk;
+    input clk;
     input Rst;
     input initial_state;
     output reg state;
@@ -42,7 +42,7 @@ module live_cell(neighbours, Clk, Rst, initial_state, state);
     // next_state is the next state (alive or dead) of this cell
     assign next_state = (population == 2 & state) | population == 3;
  
-    always @(posedge Clk or negedge Rst) begin
+    always @(posedge clk or negedge Rst) begin
         if (!Rst) begin
             // When reset fires, return this cell to its initial state
             state = initial_state;

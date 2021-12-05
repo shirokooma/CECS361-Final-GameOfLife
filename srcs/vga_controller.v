@@ -47,25 +47,25 @@ module vga_controller(
     //onboard clk 100Mhz 100T
     //to generate 100Mhz clk divide by 4 to get 25Mhz
     
-    reg [9:0] h_counter = 0;
+    reg [9:0] h_count = 0;
     reg [9:0] v_counter = 0;
     reg v_enable = 0;
     
     // counters for horizontal and vertical pos
     always @(posedge pixel_clk or posedge reset) begin
         if (reset) begin
-            h_counter <= 0;
-        end else if (h_counter == HMAX - 1) begin
-            h_counter <= 0;
+            h_count <= 0;
+        end else if (h_count == HMAX - 1) begin
+            h_count <= 0;
             v_enable <= 1;
         end else begin
-            h_counter <= h_counter + 1'b1;
+            h_count <= h_count + 1'b1;
             v_enable <= 0;
         end
      end
      
      always @(*) begin
-        if (h_counter < HSYN) begin
+        if (h_count < HSYN) begin
             hsync = 0;
         end else begin
             hsync = 1;
@@ -93,14 +93,14 @@ module vga_controller(
      end
      
      always @(*) begin
-        if ((h_counter >= HBP) && (h_counter < HFP) && (v_counter >= VBP) && (v_counter < VFP)) begin
+        if ((h_count >= HBP) && (h_count < HFP) && (v_counter >= VBP) && (v_counter < VFP)) begin
             inside_video = 1;
         end else begin
             inside_video = 0;
         end
      end
      
-     assign x_pos = h_counter - HBP;
+     assign x_pos = h_count - HBP;
      assign y_pos = v_counter - VBP;
      
 endmodule

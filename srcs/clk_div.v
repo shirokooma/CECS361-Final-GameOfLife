@@ -19,37 +19,18 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-module clk_div ( 
-                input clk,
-                input reset,
-                output q
-);
-    
-     
-    reg [1:0] r_reg;
-    wire [1:0] r_nxt;
-    reg clk_track;
-     
-    always @(posedge clk or posedge reset)
-     
-    begin
-      if (reset)
-         begin
-            r_reg <= 3'b0;
-        clk_track <= 1'b0;
-         end
-     
-      else if (r_nxt == 2'b10)
-           begin
-             r_reg <= 0;
-             clk_track <= ~clk_track;
-           end
-     
-      else 
-          r_reg <= r_nxt;
+module clk_div(Clk_100M, q);
+
+    input Clk_100M;
+    output q;
+
+reg [1:0] m;
+initial m = 0;
+
+always @(posedge Clk_100M) begin
+    m <= m + 1;
     end
- 
- assign r_nxt = r_reg+1;   	      
- assign clk_out = clk_track;
- 
+    
+    assign q = m[1];
+    
 endmodule
