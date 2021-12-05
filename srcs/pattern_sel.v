@@ -21,6 +21,8 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
+
+
 module pattern_sel(
     input in1, // msb switch 
     input in0,
@@ -28,9 +30,12 @@ module pattern_sel(
     input pattern_b, // Blinker
     input pattern_c, // Beacon
     input pattern_d, // Acorn
+    output [3:0] Q,
     output out_pattern
     );
     
     assign out_pattern = in1 ? ( in0 ? pattern_d : pattern_c) : (in0 ? pattern_b : pattern_a);
+    
+    assign Q = {1'b0,1'b0,in1,in0};
     
 endmodule
