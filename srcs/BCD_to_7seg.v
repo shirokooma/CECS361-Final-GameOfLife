@@ -10,7 +10,7 @@
 
 module BCD_to_7seg(
     input[3:0] Q,
-    output reg [7:0] cathode
+    output reg [7:0] cathode = 0
     );
     always@(*)begin
         case(Q)
