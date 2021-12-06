@@ -19,9 +19,10 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-module live_cell(neighbours, clk, Rst, initial_state, state);
+module live_cell(neighbours, clk, use_enable, Rst, initial_state, state);
     input [7:0] neighbours;
     input clk;
+    input use_enable;
     input Rst;
     input initial_state;
     output reg state;
@@ -41,14 +42,23 @@ module live_cell(neighbours, clk, Rst, initial_state, state);
     
     // next_state is the next state (alive or dead) of this cell
     assign next_state = (population == 2 & state) | population == 3;
- 
+    
+    //wire enable;
+    //wire use_enable;
+    
+    //clk_en clk_en(.clk(clk), .en(enable));
+    //dff_en dff_en(.DFF_CLK(clk), .clock_en(enable), .Q(use_enable));
+    
     always @(posedge clk or negedge Rst) begin
-        if (!Rst) begin
-            // When reset fires, return this cell to its initial state
-            state = initial_state;
-        end else begin
-            // When the clock fires, bring this cell to its next state
-            state = next_state;
+        if (use_enable == 1) begin
+            if (!Rst) begin
+                // When reset fires, return this cell to its initial state
+                state = initial_state;
+            end else begin
+                // call dff_w_en
+                // When the clock fires, bring this cell to its next state
+                state = next_state;
+            end
         end
     end
 endmodule

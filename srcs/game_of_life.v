@@ -368,9 +368,14 @@ module game_of_life(KEY, clk, x, y, r, g, b);
     assign cells_reset_state = cells_preset;
 
     // Create a clock to control the speed of generations
-    wire clk1;
-    clk_div(.Clk_100M(clk), .q(clk1));
-
+    //wire clk1;
+    //clk_div(.clk(clk), .q(clk1));
+    //wire enable;
+    wire use_enable;
+    
+    clk_div div(.clk(clk), .en(use_enable));
+    //dff_en dff_en(.DFF_CLK(clk), .clock_en(enable), .Q(use_enable));
+    
     /**
      * Assign neighbours for each cell depending on the cell's location.
      * Cells on the edges and corners of the grid must be dealt with separately since
@@ -472,7 +477,7 @@ module game_of_life(KEY, clk, x, y, r, g, b);
                 assign neighbours[7] = cells[i + 64 + 1];
             end
             // Create the module for the cell
-            live_cell(neighbours, clk1, KEY[2], cells_reset_state[i], cells[i]);
+            live_cell(.neighbours(neighbours), .clk(clk), .use_enable(use_enable), .Rst(KEY[2]), .initial_state(cells_reset_state[i]), .state(cells[i]));
         end
     endgenerate
         

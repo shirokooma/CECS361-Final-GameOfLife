@@ -35,12 +35,12 @@ module top(
     wire [9:0] x_pos_top;
     wire [9:0] y_pos_top; // outputted from vga_controler -> input to GOL
     //wire r_top, g_top, b_top; // GOL output -> display grid -> outputted to this wire for use in TOP output to VGA
-    wire q;
-    
+    //wire clk_25;
+    wire clk_enable;
     // create LED input check
-    
-    clk_div             clk_div(.Clk_100M(clk), .q(q)); 
-    vga_top             vga_cont(.clk(q), .hsync_vga(hsync_top), .vsync_vga(vsync_top), .r_vga(), .g_vga(), .b_vga()); // instead of a universal 25clk we instantiate 2 instances of clk_div to drive our vga clock
+   // clk_en clk_en(.clk(clk), .en(clk_enable));
+    //clk_div             clk_div(.clk(clk), .q(clk_25)); 
+    vga_top             vga_cont(.clk(clk), .hsync_vga(hsync_top), .vsync_vga(vsync_top), .r_vga(), .g_vga(), .b_vga()); // instead of a universal 25clk we instantiate 2 instances of clk_div to drive our vga clock
     //vga_controller      vga(.pixel_clk(clk_25), .reset(), .inside_video(), .hsync(hsync_top), .vsync(vsync_top), .x_pos(x_pos_top), .y_pos(y_pos_top));
     game_of_life        gol(.KEY(Key), .clk(clk), .x(x_pos_top), .y(y_pos_top), .r(r_top), .g(g_top), .b(b_top));
     

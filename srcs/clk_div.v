@@ -3,13 +3,13 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 10/27/2021 07:09:45 PM
+// Create Date: 12/05/2021 10:11:06 PM
 // Design Name: 
 // Module Name: clk_div
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
-// Description: Divides 100 MHz clock to 25MHz for 640x480 sample @ 60Hz
+// Description: 
 // 
 // Dependencies: 
 // 
@@ -19,18 +19,19 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-module clk_div(Clk_100M, q);
 
-    input Clk_100M;
-    output q;
-
-reg [1:0] m;
-initial m = 0;
-
-always @(posedge Clk_100M) begin
-    m <= m + 1;
+module clk_div(
+    input clk,
+    output en
+    );
+    
+    reg [1:0] m;
+    
+    initial m = 0;
+    
+    always @(posedge clk) begin
+        m <= m + 1;
     end
     
-    assign q = m[1];
-    
+    assign en = m[1];
 endmodule
