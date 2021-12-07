@@ -3,7 +3,7 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 12/05/2021 06:44:56 AM
+// Create Date: 12/07/2021 10:06:38 AM
 // Design Name: 
 // Module Name: iteration_counter
 // Project Name: 
@@ -21,17 +21,31 @@
 
 
 module iteration_counter(
-    input wire counter_clock_signal, //replace with clk from top
-    input wire switch, //use switch to turn on and off the counter
-    output reg [7:0] counter = 0
+    input clk,
+    input reset,
+    output reg [15:0] displayed_number,
+    output reg [26:0] counter
     );
     
-    always@(posedge counter_clock_signal, posedge switch) begin
-        if (switch == 0)begin
-            counter <= counter;
+    wire enable;
+    
+    always @(posedge clk or posedge reset)
+    begin
+        if(reset==1)
+            counter <= 0;
+        else begin
+            if(counter>=99999999) 
+                 counter <= 0;
+            else
+                counter <= counter + 1;
         end
-        if (switch == 1)begin
-            counter <= counter + 1;
-        end
+    end 
+    assign enable = (counter==99999999)?1:0;
+    always @(posedge clk or posedge reset)
+    begin
+        if(reset==1)
+            displayed_number <= 0; 
+        else if(enable==1)
+            displayed_number <= displayed_number + 1;
     end
 endmodule
