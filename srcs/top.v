@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
-// Engineer: 
+// Engineer: Evan Nguyen
 // 
 // Create Date: 12/03/2021 11:39:23 PM
 // Design Name: 
@@ -9,7 +9,7 @@
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
-// Description: 
+// Description: Top module of GOL algo and VGA controller. 
 // 
 // Dependencies: 
 // 
