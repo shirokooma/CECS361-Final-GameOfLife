@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
-// Engineer: Evan Nguyen
+// Engineer: 
 // 
 // Create Date: 12/03/2021 11:39:23 PM
 // Design Name: 
@@ -9,7 +9,7 @@
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
-// Description: Top module of GOL algo and VGA controller. 
+// Description: 
 // 
 // Dependencies: 
 // 
@@ -37,11 +37,13 @@ module top(
     //wire r_top, g_top, b_top; // GOL output -> display grid -> outputted to this wire for use in TOP output to VGA
     //wire clk_25;
     wire clk_enable;
+    assign y_pos_top = 10'd800;
+    assign x_pos_top = 10'd525;
     // create LED input check
    // clk_en clk_en(.clk(clk), .en(clk_enable));
-    //clk_div             clk_div(.clk(clk), .q(clk_25)); 
-    vga_top             vga_cont(.clk(clk), .hsync_vga(hsync_top), .vsync_vga(vsync_top), .r_vga(), .g_vga(), .b_vga()); // instead of a universal 25clk we instantiate 2 instances of clk_div to drive our vga clock
+    clk_div             clk_div(.clk(clk), .en(clk_enable)); 
+    vga_top             vga_cont(.clk(clk), .use_enable(clk_enable), .hsync_vga(hsync_top), .vsync_vga(vsync_top), .r_vga(), .g_vga(), .b_vga()); // instead of a universal 25clk we instantiate 2 instances of clk_div to drive our vga clock
     //vga_controller      vga(.pixel_clk(clk_25), .reset(), .inside_video(), .hsync(hsync_top), .vsync(vsync_top), .x_pos(x_pos_top), .y_pos(y_pos_top));
-    game_of_life        gol(.KEY(Key), .clk(clk), .x(x_pos_top), .y(y_pos_top), .r(r_top), .g(g_top), .b(b_top));
+    game_of_life        gol(.KEY(Key), .clk(clk), .use_enable(clk_enable), .x(x_pos_top), .y(y_pos_top), .r(r_top), .g(g_top), .b(b_top));
     
 endmodule

@@ -9,7 +9,7 @@
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
-// Description: VGA controller responsiible for outputtng hsync and vsync signals. 
+// Description: 
 // 
 // Dependencies: 
 // 
@@ -21,6 +21,7 @@
 
 module vga_top (
         input clk,
+        input use_enable,
         output hsync_vga,
         output vsync_vga,
         output [3:0] r_vga, 
@@ -35,10 +36,9 @@ module vga_top (
     // USE A UNIVERSAL CLK, in all POSEDGE. Drive each ALWAYS block with
     // the use of CLOCK_ENABLE to drive its action.
     //wire enable;
-    wire use_enable;
     
     //clk_en clk_en(.clk(clk), .en(use_enable));
-    clk_div div(.clk(clk), .en(use_enable));
+    //clk_div div(.clk(clk), .en(use_enable));
     //dff_en dff_en(.DFF_CLK(clk), .clock_en(enable), .Q(use_enable));
     
     horizontal_counter  vga_horiz(.clk(clk), .use_enable(use_enable), .v_count_enable(v_count_enable_vga), .h_count(h_count_vga));
@@ -48,8 +48,8 @@ module vga_top (
     assign hsync_vga = (h_count_vga < 96) ? 1'b1 : 1'b0; // as soon as hco
     assign vsync_vga = (v_count_vga < 2) ? 1'b1 : 1'b0;
     // colors
-    //assign r_vga = (h_count_vga < 784 && h_count_vga > 143 && v_count_vga < 515 && v_count_vga > 34) ? 4'hF : 4'h0;
-    //assign b_vga = (h_count_vga < 784 && h_count_vga > 143 && v_count_vga < 515 && v_count_vga > 34) ? 4'hF : 4'h0;
-    //assign g_vga = (h_count_vga < 784 && h_count_vga > 143 && v_count_vga < 515 && v_count_vga > 34) ? 4'hF : 4'h0;
+    assign r_vga = (h_count_vga < 784 && h_count_vga > 143 && v_count_vga < 515 && v_count_vga > 34) ? 4'hF : 4'h0;
+    assign b_vga = (h_count_vga < 784 && h_count_vga > 143 && v_count_vga < 515 && v_count_vga > 34) ? 4'hF : 4'h0;
+    assign g_vga = (h_count_vga < 784 && h_count_vga > 143 && v_count_vga < 515 && v_count_vga > 34) ? 4'hF : 4'h0;
 
 endmodule

@@ -24,11 +24,12 @@
 /**
  * Main module to be instantiated in a project that uses a VGA controller
  */
-module game_of_life(KEY, clk, x, y, r, g, b);
+module game_of_life(KEY, clk, use_enable, x, y, r, g, b);
     // KEYs are used to reset and cycle through presets
     input [3:0] KEY;
-    // take universal clock but use enable signals to drive the slower clocks
+    // CLOCK_25 is used as a seed for the slower clock which controls the speed of Life generations
     input clk;
+    input use_enable;
     // x and y are pixel coordinates on the 640-by-480 VGA display
     input [9:0] x, y;
     // r, g, and b represent the colour of each pixel on the VGA display
@@ -371,9 +372,9 @@ module game_of_life(KEY, clk, x, y, r, g, b);
     //wire clk1;
     //clk_div(.clk(clk), .q(clk1));
     //wire enable;
-    wire use_enable;
+    //wire use_enable;
     
-    clk_div div(.clk(clk), .en(use_enable));
+    //clk_div div(.clk(clk), .en(use_enable));
     //dff_en dff_en(.DFF_CLK(clk), .clock_en(enable), .Q(use_enable));
     
     /**
