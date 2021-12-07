@@ -41,6 +41,4 @@ module top_7seg(
     pattern_sel
         sel(.in1(in1),.in0(in0),.pattern_a(pattern_a),.pattern_b(pattern_b),.pattern_c(pattern_c),.pattern_d(pattern_d),.Q(Q),.out_pattern(out_pattern));
         
-    iteration_counter
-        counter(.clk(clk), .Q(Q));
 endmodule

@@ -28,14 +28,21 @@ module vga_top (
         output [3:0] b_vga
     );
 
-    //wire clk_25_vga;
     wire v_count_enable_vga;
     wire [15:0] h_count_vga;
     wire [15:0] v_count_vga;
     
-    //clk_div             clk_vga(.Clk_100M(clk), .q(clk_25_vga)); // separete clock divider in this circuit as opposed to in top
-    horizontal_counter  vga_horiz(.clk(clk), .v_count_enable(v_count_enable_vga), .h_count(h_count_vga));
-    vertical_counter    vga_vert(.clk(clk), .v_count_enable(v_count_enable_vga), .v_count(v_count_vga));
+    // USE A UNIVERSAL CLK, in all POSEDGE. Drive each ALWAYS block with
+    // the use of CLOCK_ENABLE to drive its action.
+    //wire enable;
+    wire use_enable;
+    
+    //clk_en clk_en(.clk(clk), .en(use_enable));
+    clk_div div(.clk(clk), .en(use_enable));
+    //dff_en dff_en(.DFF_CLK(clk), .clock_en(enable), .Q(use_enable));
+    
+    horizontal_counter  vga_horiz(.clk(clk), .use_enable(use_enable), .v_count_enable(v_count_enable_vga), .h_count(h_count_vga));
+    vertical_counter    vga_vert(.clk(clk),  .use_enable(use_enable), .v_count_enable(v_count_enable_vga), .v_count(v_count_vga));
     
     // outputs
     assign hsync_vga = (h_count_vga < 96) ? 1'b1 : 1'b0; // as soon as hco

@@ -21,37 +21,25 @@
 
 
 module BCD_control(
-    input [3:0] digit1,
-    input [3:0] digit2,
-    input [3:0] digit3,
-    input [3:0] digit4,
-    input [3:0] digit5,
-    input [3:0] digit6,
-    input [3:0] digit7,
-    input [3:0] digit8,
-    input [1:0] refreshcounter,
+    input [3:0] digit1, //ones place // right most digit
+    input [3:0] digit2, //tens
+    input [3:0] digit3, //hundreds
+    input [3:0] digit4, //thousands // left most digit
+    input [1:0] refresh_counter,
     output reg [3:0] ONE_DIGIT = 0
     );
     
-    always@(refreshcounter)
+    always@(refresh_counter)
     begin
-        case(refreshcounter)
-            3'b000:
-                ONE_DIGIT = digit1; //digit 1 ON (rightmost digit)
-            3'b001:
-                ONE_DIGIT = digit2; //digit 2 ON
-            3'b010:
-                ONE_DIGIT = digit3; //digit 3 ON
-            3'b011:
-                ONE_DIGIT = digit4; //digit 4 ON
-            3'b100:
-                ONE_DIGIT = digit5; //digit 5 ON
-            3'b101:
-                ONE_DIGIT = digit6; //digit 6 ON
-            3'b110:
-                ONE_DIGIT = digit7; //digit 7 ON
-            3'b111:
-                ONE_DIGIT = digit8; //digit 9 ON (leftmost character)
+        case(refresh_counter)
+            2'b00:
+                ONE_DIGIT = digit1; //digit 1 value (rightmost digit)
+            2'b01:
+                ONE_DIGIT = digit2; //digit 2 value
+            2'b10:
+                ONE_DIGIT = digit3; //digit 3 value
+            2'b11:
+                ONE_DIGIT = digit4; //digit 4 value (leftmost character)
         endcase
     end
 

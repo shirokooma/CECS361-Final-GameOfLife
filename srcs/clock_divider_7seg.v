@@ -19,28 +19,31 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-
-module clock_divider_7seg(
-    input clk, //replace with clk from top
-    output reg divided_clk
+//counter based clk div
+//div value = 100Mhz/(2*desired freguency) - 1 ==> 10khz ==> 4999
+module clock_divider_7seg #(parameter div_value = 4999)(//global parameter
+    input clk, //100Mhz
+    output reg divided_clk = 0//10 kHz
     );
-localparam div_value = 4999;
 
-integer counter_value = 0;
+integer counter_value = 0; //32 bit wide reg bus
 
+//counter
 always@(posedge clk)
 begin
+    //keep counting undtil div val
     if(counter_value == div_value)
-        counter_value <= 0;
+        counter_value <= 0; // reset the counter_value
     else
-        counter_value <= counter_value +1;
+        counter_value <= counter_value +1; //count up
 end   
 
+//clock div
 always@(posedge clk)
 begin
     if(counter_value == div_value)
-        divided_clk <= ~divided_clk;
+        divided_clk <= ~divided_clk; //flip signal
     else
-        divided_clk <= divided_clk;
+        divided_clk <= divided_clk;//store value
 end
 endmodule

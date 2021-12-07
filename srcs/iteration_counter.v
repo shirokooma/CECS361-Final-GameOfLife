@@ -21,20 +21,17 @@
 
 
 module iteration_counter(
-    input clk, //replace with clk from top
-    output reg [3:0] Q
+    input wire counter_clock_signal, //replace with clk from top
+    input wire switch, //use switch to turn on and off the counter
+    output reg [7:0] counter = 0
     );
     
-    reg [26:0] counter;
-        always@(posedge clk) begin
-        if(counter == 27'd100000000)begin
-            counter <= 27'b0 ;
-            if(Q < 9)
-                Q <= Q + 1'b1;
-        else
-            Q <= 4'b0;
+    always@(posedge counter_clock_signal, posedge switch) begin
+        if (switch == 0)begin
+            counter <= counter;
         end
-        else
-            counter <= counter + 1'b1;
+        if (switch == 1)begin
+            counter <= counter + 1;
         end
+    end
 endmodule
