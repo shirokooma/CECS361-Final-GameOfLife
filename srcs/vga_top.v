@@ -9,7 +9,7 @@
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
-// Description: 
+// Description: VGA controller responsiible for outputtng hsync and vsync signals. 
 // 
 // Dependencies: 
 // 
@@ -48,8 +48,8 @@ module vga_top (
     assign hsync_vga = (h_count_vga < 96) ? 1'b1 : 1'b0; // as soon as hco
     assign vsync_vga = (v_count_vga < 2) ? 1'b1 : 1'b0;
     // colors
-    assign r_vga = (h_count_vga < 784 && h_count_vga > 143 && v_count_vga < 515 && v_count_vga > 34) ? 4'hF : 4'h0;
-    assign b_vga = (h_count_vga < 784 && h_count_vga > 143 && v_count_vga < 515 && v_count_vga > 34) ? 4'hF : 4'h0;
-    assign g_vga = (h_count_vga < 784 && h_count_vga > 143 && v_count_vga < 515 && v_count_vga > 34) ? 4'hF : 4'h0;
+    //assign r_vga = (h_count_vga < 784 && h_count_vga > 143 && v_count_vga < 515 && v_count_vga > 34) ? 4'hF : 4'h0;
+    //assign b_vga = (h_count_vga < 784 && h_count_vga > 143 && v_count_vga < 515 && v_count_vga > 34) ? 4'hF : 4'h0;
+    //assign g_vga = (h_count_vga < 784 && h_count_vga > 143 && v_count_vga < 515 && v_count_vga > 34) ? 4'hF : 4'h0;
 
 endmodule
