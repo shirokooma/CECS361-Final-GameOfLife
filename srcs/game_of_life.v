@@ -27,7 +27,7 @@
 module game_of_life(KEY, clk, x, y, r, g, b);
     // KEYs are used to reset and cycle through presets
     input [3:0] KEY;
-    // CLOCK_25 is used as a seed for the slower clock which controls the speed of Life generations
+    // take universal clock but use enable signals to drive the slower clocks
     input clk;
     // x and y are pixel coordinates on the 640-by-480 VGA display
     input [9:0] x, y;
